@@ -1,0 +1,9 @@
+{
+  "extends": "@family-docs/config-ts/nextjs.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "paths": {}
+  },
+  "include": ["src"]
+}

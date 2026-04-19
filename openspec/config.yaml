@@ -1,0 +1,95 @@
+schema: spec-driven
+
+context: |
+  # Family E-Documents — Project Context
+
+  ## Purpose
+  A family document explorer: a private, self-hosted space where family members
+  can upload, organise, and find important documents. Think of it as a private
+  Google Drive with fine-grained per-folder and per-document access control.
+
+  ## Monorepo layout
+  - `app/web`  — Next.js (App Router) frontend
+  - `app/api`  — NestJS backend
+  - `packages/ui`            — shared shadcn/Tailwind component library
+  - `packages/types`         — shared TypeScript types (DTOs, enums, Zod schemas)
+  - `packages/config-eslint` — shared ESLint config
+  - `packages/config-ts`     — shared tsconfig bases
+
+  ## Tech stack
+
+  ### Frontend (app/web)
+  - Next.js (App Router) + TypeScript strict
+  - Tailwind CSS for styling
+  - shadcn/ui for UI components
+  - NextAuth.js (credentials provider — email + password)
+  - TanStack Query for server state
+  - React Hook Form + Zod for forms
+  - ESLint + Prettier
+
+  ### Backend (app/api)
+  - NestJS + TypeScript strict
+  - PostgreSQL via Prisma ORM
+  - AWS S3 (presigned URL pattern) for file storage — abstracted for future NAS swap
+  - Structured JSON audit middleware (logs every request to Prisma audit_log table)
+  - No throttling; standard security hardening (helmet, CORS, input validation)
+  - ESLint + Prettier
+
+  ### Shared packages
+  - `packages/types`: DTOs, enums (Role, Permission, VisibilityMode), Zod schemas
+  - `packages/ui`: shadcn component wrappers, themed tokens
+
+  ## Domain concepts
+
+  ### Roles
+  - ADMIN: full access to everything including user management and permission assignment
+  - USER: scoped access controlled by role baseline + folder permissions + per-user overrides
+
+  ### Permission layers (resolved in order)
+  1. Role baseline (ADMIN = all, USER = view/upload/download by default)
+  2. Folder permissions (per-user, per-folder, cascades from parent unless overridden)
+  3. Document visibility (PUBLIC = folder-inherited | RESTRICTED = explicit allowlist)
+     — document owner can restrict visibility only if user.canRestrictDocs = true
+     — admin controls the canRestrictDocs toggle per user
+
+  ### Folder tree
+  - Hierarchical (self-referential Folder.parentId)
+  - Permissions cascade down from parent; child folders can override
+  - Documents live in exactly one folder
+
+  ### Document lifecycle
+  1. Client posts metadata → API returns { documentId, presignedUploadUrl }
+  2. Client PUTs file directly to S3
+  3. Client confirms → API marks document active, writes audit log
+
+  ### Search
+  - PostgreSQL full-text search (tsvector on title + description + tags)
+  - Fuzzy / partial match via pg_trgm
+  - Results scoped to folders the requesting user can view
+  - Tag-based filter combinable with full-text
+
+  ### Audit log
+  - NestJS middleware intercepts every request
+  - Logs: userId, method, path, statusCode, durationMs, ipAddress, userAgent, timestamp
+  - Written to audit_log Prisma model (Postgres table)
+  - Structured JSON — queryable, not just a file tail
+
+  ## Conventions
+  - pnpm workspaces
+  - Conventional commits
+  - All API routes versioned: /api/v1/...
+  - OpenAPI/Swagger on api
+  - All IDs: cuid2
+  - Dates: ISO 8601 UTC
+
+rules:
+  proposal:
+    - Include a "Non-goals" section
+    - Keep scope tight — one capability per change
+  tasks:
+    - Each task must be independently completable
+    - Include acceptance criteria
+    - Max granularity: one module or one screen per task
+  spec:
+    - Include data model, API contract, and business rules
+    - Call out permission implications explicitly

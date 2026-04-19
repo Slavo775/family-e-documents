@@ -1,0 +1,18 @@
+{
+  "name": "family-e-documents",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter app/web dev\" \"pnpm --filter app/api dev\"",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "concurrently": "^8.2.0",
+    "prettier": "^3.2.0",
+    "typescript": "^5.4.0"
+  }
+}
