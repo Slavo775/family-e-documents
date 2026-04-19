@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ──────────────────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum DocumentStatus {
+  PENDING
+  ACTIVE
+  DELETED
+}
+
+enum Visibility {
+  PUBLIC
+  RESTRICTED
+}
+
+enum FolderAction {
+  VIEW
+  UPLOAD
+  DELETE
+  MANAGE
+}
+
+// ─── Models ─────────────────────────────────────────────────────────────────
+
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  passwordHash    String
+  name            String
+  role            Role     @default(USER)
+  canRestrictDocs Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  folders           Folder[]
+  folderPermissions FolderPermission[]
+  uploadedDocuments Document[]         @relation("UploadedBy")
+
+  @@map("users")
+}
+
+model Folder {
+  id          String   @id @default(cuid())
+  name        String
+  parentId    String?
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  parent      Folder?            @relation("FolderTree", fields: [parentId], references: [id])
+  children    Folder[]           @relation("FolderTree")
+  createdBy   User               @relation(fields: [createdById], references: [id])
+  permissions FolderPermission[]
+  documents   Document[]
+
+  @@map("folders")
+}
+
+model FolderPermission {
+  id        String         @id @default(cuid())
+  folderId  String
+  userId    String
+  actions   FolderAction[]
+  inherited Boolean        @default(true)
+
+  folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([folderId, userId])
+  @@map("folder_permissions")
+}
+
+model Document {
+  id             String         @id @default(cuid())
+  name           String
+  title          String
+  description    String?
+  tags           String[]
+  folderId       String
+  fileKey        String
+  mimeType       String
+  sizeBytes      Int
+  status         DocumentStatus @default(PENDING)
+  visibility     Visibility     @default(PUBLIC)
+  allowedUserIds String[]
+  uploadedById   String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  folder     Folder @relation(fields: [folderId], references: [id])
+  uploadedBy User   @relation("UploadedBy", fields: [uploadedById], references: [id])
+
+  @@map("documents")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  method     String
+  path       String
+  statusCode Int
+  durationMs Int
+  ipAddress  String
+  userAgent  String
+  body       Json?
+  timestamp  DateTime @default(now())
+
+  @@map("audit_logs")
+}

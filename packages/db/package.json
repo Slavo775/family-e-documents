@@ -1,0 +1,40 @@
+{
+  "name": "@family-docs/db",
+  "version": "1.0.0",
+  "description": "Database package for family-e-documents",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && cp -r src/generated dist/generated",
+    "build:watch": "tsc --watch",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:migrate:reset": "prisma migrate reset --force",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "db:seed": "tsx src/seed.ts"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^6.0.0",
+    "@prisma/client": "^6.0.0",
+    "dotenv": "^16.4.0",
+    "pg": "^8.13.0",
+    "prisma": "^6.0.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.0.0",
+    "@family-docs/config-ts": "workspace:*",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.0.0",
+    "@types/pg": "^8.11.0",
+    "bcryptjs": "^2.4.3",
+    "tsx": "^4.19.0"
+  }
+}
