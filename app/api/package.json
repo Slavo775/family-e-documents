@@ -24,6 +24,7 @@
     "rxjs": "^7.8.0"
   },
   "devDependencies": {
+    "@family-docs/config-eslint": "workspace:*",
     "@family-docs/config-ts": "workspace:*",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/testing": "^10.0.0",

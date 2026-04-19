@@ -1,4 +1,5 @@
-import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
+import type { NestMiddleware} from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common'
 import type { Request, Response, NextFunction } from 'express'
 
 @Injectable()

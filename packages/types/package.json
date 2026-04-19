@@ -8,9 +8,11 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@family-docs/config-eslint": "workspace:*",
     "@family-docs/config-ts": "workspace:*",
     "typescript": "^5.4.0"
   }

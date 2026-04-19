@@ -12,13 +12,17 @@
   "dependencies": {
     "@family-docs/types": "workspace:*",
     "@family-docs/ui": "workspace:*",
+    "@hookform/resolvers": "^5.2.2",
     "next": "^14.2.0",
     "next-auth": "^4.24.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "react-hook-form": "^7.54.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@family-docs/config-eslint": "workspace:*",
+    "eslint-config-next": "14.2.0",
     "@family-docs/config-ts": "workspace:*",
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.0",
