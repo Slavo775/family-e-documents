@@ -9,6 +9,7 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  // eslint-disable-next-line no-console
   console.error(error)
 
   return (

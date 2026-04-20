@@ -3,10 +3,19 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"pnpm --filter app/web dev\" \"pnpm --filter app/api dev\"",
+    "dev:api": "pnpm --filter app/api dev",
+    "dev:web": "pnpm --filter app/web dev",
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:generate": "pnpm --filter @family-docs/db db:generate && pnpm --filter @family-docs/db build",
+    "db:migrate:dev": "pnpm --filter @family-docs/db db:migrate:dev",
+    "db:migrate:deploy": "pnpm --filter @family-docs/db db:migrate:deploy",
+    "db:migrate:reset": "pnpm --filter @family-docs/db db:migrate:reset",
+    "db:push": "pnpm --filter @family-docs/db db:push",
+    "db:studio": "pnpm --filter @family-docs/db db:studio",
+    "db:seed": "pnpm --filter @family-docs/db db:seed"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",

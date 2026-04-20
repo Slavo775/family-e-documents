@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
 import type { Request } from 'express'
 import type { UserPublic } from '@family-docs/types'
-import { AuthService } from './auth.service'
+import type { AuthService } from './auth.service'
 import { BearerTokenGuard } from './bearer-token.guard'
 
 class LoginBodyDto {

@@ -14,6 +14,7 @@ const base = {
     'no-implied-eval': 'error',
     'no-new-func': 'error',
     'no-script-url': 'error',
+    'no-console': 'warn',
   },
 }
 

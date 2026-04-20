@@ -1,2 +1,3 @@
+const base = require('@family-docs/config-eslint/base')
 /** @type {import('eslint').Linter.Config} */
-module.exports = require('@family-docs/config-eslint/base')
+module.exports = { ...base, env: { node: true } }

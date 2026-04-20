@@ -1,7 +1,3 @@
-const base = require('@family-docs/config-eslint/base')
-
+const nextjs = require('@family-docs/config-eslint/nextjs')
 /** @type {import('eslint').Linter.Config} */
-module.exports = {
-  ...base,
-  extends: [...base.extends, 'next/core-web-vitals'],
-}
+module.exports = { ...nextjs }

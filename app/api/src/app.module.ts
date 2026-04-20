@@ -1,9 +1,13 @@
-import type { MiddlewareConsumer, NestModule } from '@nestjs/common';
-import { Module } from '@nestjs/common'
+import type { MiddlewareConsumer, NestModule } from '@nestjs/common'
+import { Module, RequestMethod } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { PrismaModule } from './prisma/prisma.module'
-import { AuditMiddleware } from './common/audit.middleware'
 import { AuthModule } from './auth/auth.module'
+import { AuditModule } from './audit/audit.module'
+import { AuditMiddleware } from './audit/audit.middleware'
+import { StorageModule } from './storage/storage.module'
+import { PermissionsModule } from './permissions/permissions.module'
+import { DocumentsModule } from './documents/documents.module'
 
 @Module({
   imports: [
@@ -13,10 +17,14 @@ import { AuthModule } from './auth/auth.module'
     }),
     PrismaModule,
     AuthModule,
+    AuditModule,
+    StorageModule,
+    PermissionsModule,
+    DocumentsModule,
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuditMiddleware).forRoutes('*')
+    consumer.apply(AuditMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL })
   }
 }

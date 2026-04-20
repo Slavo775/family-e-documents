@@ -1376,6 +1376,7 @@ export namespace Prisma {
     folders: number
     folderPermissions: number
     uploadedDocuments: number
+    auditLogs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1383,6 +1384,7 @@ export namespace Prisma {
     folders?: boolean | UserCountOutputTypeCountFoldersArgs
     folderPermissions?: boolean | UserCountOutputTypeCountFolderPermissionsArgs
     uploadedDocuments?: boolean | UserCountOutputTypeCountUploadedDocumentsArgs
+    auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
   }
 
   // Custom InputTypes
@@ -1422,6 +1424,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUploadedDocumentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DocumentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuditLogWhereInput
   }
 
 
@@ -1670,6 +1679,7 @@ export namespace Prisma {
     folders?: boolean | User$foldersArgs<ExtArgs>
     folderPermissions?: boolean | User$folderPermissionsArgs<ExtArgs>
     uploadedDocuments?: boolean | User$uploadedDocumentsArgs<ExtArgs>
+    auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1712,6 +1722,7 @@ export namespace Prisma {
     folders?: boolean | User$foldersArgs<ExtArgs>
     folderPermissions?: boolean | User$folderPermissionsArgs<ExtArgs>
     uploadedDocuments?: boolean | User$uploadedDocumentsArgs<ExtArgs>
+    auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1724,6 +1735,7 @@ export namespace Prisma {
       folders: Prisma.$FolderPayload<ExtArgs>[]
       folderPermissions: Prisma.$FolderPermissionPayload<ExtArgs>[]
       uploadedDocuments: Prisma.$DocumentPayload<ExtArgs>[]
+      auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2132,6 +2144,7 @@ export namespace Prisma {
     folders<T extends User$foldersArgs<ExtArgs> = {}>(args?: Subset<T, User$foldersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     folderPermissions<T extends User$folderPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$folderPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FolderPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     uploadedDocuments<T extends User$uploadedDocumentsArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadedDocumentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    auditLogs<T extends User$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2650,6 +2663,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
+  }
+
+  /**
+   * User.auditLogs
+   */
+  export type User$auditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    where?: AuditLogWhereInput
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    cursor?: AuditLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
   }
 
   /**
@@ -7400,7 +7437,7 @@ export namespace Prisma {
     statusCode: number
     durationMs: number
     ipAddress: string
-    userAgent: string
+    userAgent: string | null
     body: JsonValue | null
     timestamp: Date
     _count: AuditLogCountAggregateOutputType | null
@@ -7435,6 +7472,7 @@ export namespace Prisma {
     userAgent?: boolean
     body?: boolean
     timestamp?: boolean
+    user?: boolean | AuditLog$userArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7448,6 +7486,7 @@ export namespace Prisma {
     userAgent?: boolean
     body?: boolean
     timestamp?: boolean
+    user?: boolean | AuditLog$userArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7461,6 +7500,7 @@ export namespace Prisma {
     userAgent?: boolean
     body?: boolean
     timestamp?: boolean
+    user?: boolean | AuditLog$userArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectScalar = {
@@ -7477,10 +7517,21 @@ export namespace Prisma {
   }
 
   export type AuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "method" | "path" | "statusCode" | "durationMs" | "ipAddress" | "userAgent" | "body" | "timestamp", ExtArgs["result"]["auditLog"]>
+  export type AuditLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | AuditLog$userArgs<ExtArgs>
+  }
+  export type AuditLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | AuditLog$userArgs<ExtArgs>
+  }
+  export type AuditLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | AuditLog$userArgs<ExtArgs>
+  }
 
   export type $AuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AuditLog"
-    objects: {}
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
@@ -7489,7 +7540,7 @@ export namespace Prisma {
       statusCode: number
       durationMs: number
       ipAddress: string
-      userAgent: string
+      userAgent: string | null
       body: Prisma.JsonValue | null
       timestamp: Date
     }, ExtArgs["result"]["auditLog"]>
@@ -7886,6 +7937,7 @@ export namespace Prisma {
    */
   export interface Prisma__AuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends AuditLog$userArgs<ExtArgs> = {}>(args?: Subset<T, AuditLog$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7942,6 +7994,10 @@ export namespace Prisma {
      */
     omit?: AuditLogOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
      * Filter, which AuditLog to fetch.
      */
     where: AuditLogWhereUniqueInput
@@ -7960,6 +8016,10 @@ export namespace Prisma {
      */
     omit?: AuditLogOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
      * Filter, which AuditLog to fetch.
      */
     where: AuditLogWhereUniqueInput
@@ -7977,6 +8037,10 @@ export namespace Prisma {
      * Omit specific fields from the AuditLog
      */
     omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
     /**
      * Filter, which AuditLog to fetch.
      */
@@ -8026,6 +8090,10 @@ export namespace Prisma {
      */
     omit?: AuditLogOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
      * Filter, which AuditLog to fetch.
      */
     where?: AuditLogWhereInput
@@ -8074,6 +8142,10 @@ export namespace Prisma {
      */
     omit?: AuditLogOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
      * Filter, which AuditLogs to fetch.
      */
     where?: AuditLogWhereInput
@@ -8117,6 +8189,10 @@ export namespace Prisma {
      */
     omit?: AuditLogOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
      * The data needed to create a AuditLog.
      */
     data: XOR<AuditLogCreateInput, AuditLogUncheckedCreateInput>
@@ -8150,6 +8226,10 @@ export namespace Prisma {
      */
     data: AuditLogCreateManyInput | AuditLogCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8164,6 +8244,10 @@ export namespace Prisma {
      * Omit specific fields from the AuditLog
      */
     omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
     /**
      * The data needed to update a AuditLog.
      */
@@ -8216,6 +8300,10 @@ export namespace Prisma {
      * Limit how many AuditLogs to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8230,6 +8318,10 @@ export namespace Prisma {
      * Omit specific fields from the AuditLog
      */
     omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
     /**
      * The filter to search for the AuditLog to update in case it exists.
      */
@@ -8257,6 +8349,10 @@ export namespace Prisma {
      */
     omit?: AuditLogOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    /**
      * Filter which AuditLog to delete.
      */
     where: AuditLogWhereUniqueInput
@@ -8277,6 +8373,25 @@ export namespace Prisma {
   }
 
   /**
+   * AuditLog.user
+   */
+  export type AuditLog$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * AuditLog without action
    */
   export type AuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8288,6 +8403,10 @@ export namespace Prisma {
      * Omit specific fields from the AuditLog
      */
     omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
   }
 
 
@@ -8588,6 +8707,7 @@ export namespace Prisma {
     folders?: FolderListRelationFilter
     folderPermissions?: FolderPermissionListRelationFilter
     uploadedDocuments?: DocumentListRelationFilter
+    auditLogs?: AuditLogListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8603,6 +8723,7 @@ export namespace Prisma {
     folders?: FolderOrderByRelationAggregateInput
     folderPermissions?: FolderPermissionOrderByRelationAggregateInput
     uploadedDocuments?: DocumentOrderByRelationAggregateInput
+    auditLogs?: AuditLogOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8621,6 +8742,7 @@ export namespace Prisma {
     folders?: FolderListRelationFilter
     folderPermissions?: FolderPermissionListRelationFilter
     uploadedDocuments?: DocumentListRelationFilter
+    auditLogs?: AuditLogListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8958,9 +9080,10 @@ export namespace Prisma {
     statusCode?: IntFilter<"AuditLog"> | number
     durationMs?: IntFilter<"AuditLog"> | number
     ipAddress?: StringFilter<"AuditLog"> | string
-    userAgent?: StringFilter<"AuditLog"> | string
+    userAgent?: StringNullableFilter<"AuditLog"> | string | null
     body?: JsonNullableFilter<"AuditLog">
     timestamp?: DateTimeFilter<"AuditLog"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type AuditLogOrderByWithRelationInput = {
@@ -8971,9 +9094,10 @@ export namespace Prisma {
     statusCode?: SortOrder
     durationMs?: SortOrder
     ipAddress?: SortOrder
-    userAgent?: SortOrder
+    userAgent?: SortOrderInput | SortOrder
     body?: SortOrderInput | SortOrder
     timestamp?: SortOrder
+    user?: UserOrderByWithRelationInput
   }
 
   export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
@@ -8987,9 +9111,10 @@ export namespace Prisma {
     statusCode?: IntFilter<"AuditLog"> | number
     durationMs?: IntFilter<"AuditLog"> | number
     ipAddress?: StringFilter<"AuditLog"> | string
-    userAgent?: StringFilter<"AuditLog"> | string
+    userAgent?: StringNullableFilter<"AuditLog"> | string | null
     body?: JsonNullableFilter<"AuditLog">
     timestamp?: DateTimeFilter<"AuditLog"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type AuditLogOrderByWithAggregationInput = {
@@ -9000,7 +9125,7 @@ export namespace Prisma {
     statusCode?: SortOrder
     durationMs?: SortOrder
     ipAddress?: SortOrder
-    userAgent?: SortOrder
+    userAgent?: SortOrderInput | SortOrder
     body?: SortOrderInput | SortOrder
     timestamp?: SortOrder
     _count?: AuditLogCountOrderByAggregateInput
@@ -9021,7 +9146,7 @@ export namespace Prisma {
     statusCode?: IntWithAggregatesFilter<"AuditLog"> | number
     durationMs?: IntWithAggregatesFilter<"AuditLog"> | number
     ipAddress?: StringWithAggregatesFilter<"AuditLog"> | string
-    userAgent?: StringWithAggregatesFilter<"AuditLog"> | string
+    userAgent?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
     body?: JsonNullableWithAggregatesFilter<"AuditLog">
     timestamp?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
   }
@@ -9039,6 +9164,7 @@ export namespace Prisma {
     folders?: FolderCreateNestedManyWithoutCreatedByInput
     folderPermissions?: FolderPermissionCreateNestedManyWithoutUserInput
     uploadedDocuments?: DocumentCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9054,6 +9180,7 @@ export namespace Prisma {
     folders?: FolderUncheckedCreateNestedManyWithoutCreatedByInput
     folderPermissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
     uploadedDocuments?: DocumentUncheckedCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -9069,6 +9196,7 @@ export namespace Prisma {
     folders?: FolderUpdateManyWithoutCreatedByNestedInput
     folderPermissions?: FolderPermissionUpdateManyWithoutUserNestedInput
     uploadedDocuments?: DocumentUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9084,6 +9212,7 @@ export namespace Prisma {
     folders?: FolderUncheckedUpdateManyWithoutCreatedByNestedInput
     folderPermissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
     uploadedDocuments?: DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9427,15 +9556,15 @@ export namespace Prisma {
 
   export type AuditLogCreateInput = {
     id?: string
-    userId?: string | null
     method: string
     path: string
     statusCode: number
     durationMs: number
     ipAddress: string
-    userAgent: string
+    userAgent?: string | null
     body?: NullableJsonNullValueInput | InputJsonValue
     timestamp?: Date | string
+    user?: UserCreateNestedOneWithoutAuditLogsInput
   }
 
   export type AuditLogUncheckedCreateInput = {
@@ -9446,22 +9575,22 @@ export namespace Prisma {
     statusCode: number
     durationMs: number
     ipAddress: string
-    userAgent: string
+    userAgent?: string | null
     body?: NullableJsonNullValueInput | InputJsonValue
     timestamp?: Date | string
   }
 
   export type AuditLogUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
     method?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     statusCode?: IntFieldUpdateOperationsInput | number
     durationMs?: IntFieldUpdateOperationsInput | number
     ipAddress?: StringFieldUpdateOperationsInput | string
-    userAgent?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     body?: NullableJsonNullValueInput | InputJsonValue
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutAuditLogsNestedInput
   }
 
   export type AuditLogUncheckedUpdateInput = {
@@ -9472,7 +9601,7 @@ export namespace Prisma {
     statusCode?: IntFieldUpdateOperationsInput | number
     durationMs?: IntFieldUpdateOperationsInput | number
     ipAddress?: StringFieldUpdateOperationsInput | string
-    userAgent?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     body?: NullableJsonNullValueInput | InputJsonValue
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9485,20 +9614,19 @@ export namespace Prisma {
     statusCode: number
     durationMs: number
     ipAddress: string
-    userAgent: string
+    userAgent?: string | null
     body?: NullableJsonNullValueInput | InputJsonValue
     timestamp?: Date | string
   }
 
   export type AuditLogUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
     method?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     statusCode?: IntFieldUpdateOperationsInput | number
     durationMs?: IntFieldUpdateOperationsInput | number
     ipAddress?: StringFieldUpdateOperationsInput | string
-    userAgent?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     body?: NullableJsonNullValueInput | InputJsonValue
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9511,7 +9639,7 @@ export namespace Prisma {
     statusCode?: IntFieldUpdateOperationsInput | number
     durationMs?: IntFieldUpdateOperationsInput | number
     ipAddress?: StringFieldUpdateOperationsInput | string
-    userAgent?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     body?: NullableJsonNullValueInput | InputJsonValue
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9578,6 +9706,12 @@ export namespace Prisma {
     none?: DocumentWhereInput
   }
 
+  export type AuditLogListRelationFilter = {
+    every?: AuditLogWhereInput
+    some?: AuditLogWhereInput
+    none?: AuditLogWhereInput
+  }
+
   export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -9591,6 +9725,10 @@ export namespace Prisma {
   }
 
   export type DocumentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AuditLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9966,6 +10104,11 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type AuditLogCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -10067,6 +10210,13 @@ export namespace Prisma {
     connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
   }
 
+  export type AuditLogCreateNestedManyWithoutUserInput = {
+    create?: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput> | AuditLogCreateWithoutUserInput[] | AuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
+    createMany?: AuditLogCreateManyUserInputEnvelope
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -10093,6 +10243,13 @@ export namespace Prisma {
     connectOrCreate?: DocumentCreateOrConnectWithoutUploadedByInput | DocumentCreateOrConnectWithoutUploadedByInput[]
     createMany?: DocumentCreateManyUploadedByInputEnvelope
     connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+  }
+
+  export type AuditLogUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput> | AuditLogCreateWithoutUserInput[] | AuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
+    createMany?: AuditLogCreateManyUserInputEnvelope
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -10167,6 +10324,20 @@ export namespace Prisma {
     deleteMany?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
   }
 
+  export type AuditLogUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput> | AuditLogCreateWithoutUserInput[] | AuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutUserInput | AuditLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AuditLogCreateManyUserInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutUserInput | AuditLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutUserInput | AuditLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -10221,6 +10392,20 @@ export namespace Prisma {
     update?: DocumentUpdateWithWhereUniqueWithoutUploadedByInput | DocumentUpdateWithWhereUniqueWithoutUploadedByInput[]
     updateMany?: DocumentUpdateManyWithWhereWithoutUploadedByInput | DocumentUpdateManyWithWhereWithoutUploadedByInput[]
     deleteMany?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
+  }
+
+  export type AuditLogUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput> | AuditLogCreateWithoutUserInput[] | AuditLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutUserInput | AuditLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AuditLogCreateManyUserInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutUserInput | AuditLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutUserInput | AuditLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -10494,6 +10679,22 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutUploadedDocumentsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUploadedDocumentsInput, UserUpdateWithoutUploadedDocumentsInput>, UserUncheckedUpdateWithoutUploadedDocumentsInput>
+  }
+
+  export type UserCreateNestedOneWithoutAuditLogsInput = {
+    create?: XOR<UserCreateWithoutAuditLogsInput, UserUncheckedCreateWithoutAuditLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAuditLogsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutAuditLogsNestedInput = {
+    create?: XOR<UserCreateWithoutAuditLogsInput, UserUncheckedCreateWithoutAuditLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAuditLogsInput
+    upsert?: UserUpsertWithoutAuditLogsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuditLogsInput, UserUpdateWithoutAuditLogsInput>, UserUncheckedUpdateWithoutAuditLogsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10843,6 +11044,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AuditLogCreateWithoutUserInput = {
+    id?: string
+    method: string
+    path: string
+    statusCode: number
+    durationMs: number
+    ipAddress: string
+    userAgent?: string | null
+    body?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+  }
+
+  export type AuditLogUncheckedCreateWithoutUserInput = {
+    id?: string
+    method: string
+    path: string
+    statusCode: number
+    durationMs: number
+    ipAddress: string
+    userAgent?: string | null
+    body?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+  }
+
+  export type AuditLogCreateOrConnectWithoutUserInput = {
+    where: AuditLogWhereUniqueInput
+    create: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type AuditLogCreateManyUserInputEnvelope = {
+    data: AuditLogCreateManyUserInput | AuditLogCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -10962,6 +11197,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Document"> | Date | string
   }
 
+  export type AuditLogUpsertWithWhereUniqueWithoutUserInput = {
+    where: AuditLogWhereUniqueInput
+    update: XOR<AuditLogUpdateWithoutUserInput, AuditLogUncheckedUpdateWithoutUserInput>
+    create: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type AuditLogUpdateWithWhereUniqueWithoutUserInput = {
+    where: AuditLogWhereUniqueInput
+    data: XOR<AuditLogUpdateWithoutUserInput, AuditLogUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AuditLogUpdateManyWithWhereWithoutUserInput = {
+    where: AuditLogScalarWhereInput
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AuditLogScalarWhereInput = {
+    AND?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+    OR?: AuditLogScalarWhereInput[]
+    NOT?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+    id?: StringFilter<"AuditLog"> | string
+    userId?: StringNullableFilter<"AuditLog"> | string | null
+    method?: StringFilter<"AuditLog"> | string
+    path?: StringFilter<"AuditLog"> | string
+    statusCode?: IntFilter<"AuditLog"> | number
+    durationMs?: IntFilter<"AuditLog"> | number
+    ipAddress?: StringFilter<"AuditLog"> | string
+    userAgent?: StringNullableFilter<"AuditLog"> | string | null
+    body?: JsonNullableFilter<"AuditLog">
+    timestamp?: DateTimeFilter<"AuditLog"> | Date | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id?: string
     email: string
@@ -10974,6 +11241,7 @@ export namespace Prisma {
     folders?: FolderCreateNestedManyWithoutCreatedByInput
     folderPermissions?: FolderPermissionCreateNestedManyWithoutUserInput
     uploadedDocuments?: DocumentCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -10988,6 +11256,7 @@ export namespace Prisma {
     folders?: FolderUncheckedCreateNestedManyWithoutCreatedByInput
     folderPermissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
     uploadedDocuments?: DocumentUncheckedCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -11018,6 +11287,7 @@ export namespace Prisma {
     folders?: FolderUpdateManyWithoutCreatedByNestedInput
     folderPermissions?: FolderPermissionUpdateManyWithoutUserNestedInput
     uploadedDocuments?: DocumentUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -11032,6 +11302,7 @@ export namespace Prisma {
     folders?: FolderUncheckedUpdateManyWithoutCreatedByNestedInput
     folderPermissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
     uploadedDocuments?: DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FolderCreateWithoutChildrenInput = {
@@ -11105,6 +11376,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     folderPermissions?: FolderPermissionCreateNestedManyWithoutUserInput
     uploadedDocuments?: DocumentCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFoldersInput = {
@@ -11119,6 +11391,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     folderPermissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
     uploadedDocuments?: DocumentUncheckedCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFoldersInput = {
@@ -11266,6 +11539,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     folderPermissions?: FolderPermissionUpdateManyWithoutUserNestedInput
     uploadedDocuments?: DocumentUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFoldersInput = {
@@ -11280,6 +11554,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     folderPermissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
     uploadedDocuments?: DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FolderPermissionUpsertWithWhereUniqueWithoutFolderInput = {
@@ -11353,6 +11628,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     folders?: FolderCreateNestedManyWithoutCreatedByInput
     uploadedDocuments?: DocumentCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFolderPermissionsInput = {
@@ -11367,6 +11643,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     folders?: FolderUncheckedCreateNestedManyWithoutCreatedByInput
     uploadedDocuments?: DocumentUncheckedCreateNestedManyWithoutUploadedByInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFolderPermissionsInput = {
@@ -11430,6 +11707,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     folders?: FolderUpdateManyWithoutCreatedByNestedInput
     uploadedDocuments?: DocumentUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFolderPermissionsInput = {
@@ -11444,6 +11722,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     folders?: FolderUncheckedUpdateManyWithoutCreatedByNestedInput
     uploadedDocuments?: DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FolderCreateWithoutDocumentsInput = {
@@ -11485,6 +11764,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     folders?: FolderCreateNestedManyWithoutCreatedByInput
     folderPermissions?: FolderPermissionCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUploadedDocumentsInput = {
@@ -11499,6 +11779,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     folders?: FolderUncheckedCreateNestedManyWithoutCreatedByInput
     folderPermissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUploadedDocumentsInput = {
@@ -11562,6 +11843,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     folders?: FolderUpdateManyWithoutCreatedByNestedInput
     folderPermissions?: FolderPermissionUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadedDocumentsInput = {
@@ -11576,6 +11858,83 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     folders?: FolderUncheckedUpdateManyWithoutCreatedByNestedInput
     folderPermissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutAuditLogsInput = {
+    id?: string
+    email: string
+    passwordHash: string
+    name: string
+    role?: $Enums.Role
+    canRestrictDocs?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    folders?: FolderCreateNestedManyWithoutCreatedByInput
+    folderPermissions?: FolderPermissionCreateNestedManyWithoutUserInput
+    uploadedDocuments?: DocumentCreateNestedManyWithoutUploadedByInput
+  }
+
+  export type UserUncheckedCreateWithoutAuditLogsInput = {
+    id?: string
+    email: string
+    passwordHash: string
+    name: string
+    role?: $Enums.Role
+    canRestrictDocs?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    folders?: FolderUncheckedCreateNestedManyWithoutCreatedByInput
+    folderPermissions?: FolderPermissionUncheckedCreateNestedManyWithoutUserInput
+    uploadedDocuments?: DocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  }
+
+  export type UserCreateOrConnectWithoutAuditLogsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAuditLogsInput, UserUncheckedCreateWithoutAuditLogsInput>
+  }
+
+  export type UserUpsertWithoutAuditLogsInput = {
+    update: XOR<UserUpdateWithoutAuditLogsInput, UserUncheckedUpdateWithoutAuditLogsInput>
+    create: XOR<UserCreateWithoutAuditLogsInput, UserUncheckedCreateWithoutAuditLogsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAuditLogsInput, UserUncheckedUpdateWithoutAuditLogsInput>
+  }
+
+  export type UserUpdateWithoutAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    canRestrictDocs?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    folders?: FolderUpdateManyWithoutCreatedByNestedInput
+    folderPermissions?: FolderPermissionUpdateManyWithoutUserNestedInput
+    uploadedDocuments?: DocumentUpdateManyWithoutUploadedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    canRestrictDocs?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    folders?: FolderUncheckedUpdateManyWithoutCreatedByNestedInput
+    folderPermissions?: FolderPermissionUncheckedUpdateManyWithoutUserNestedInput
+    uploadedDocuments?: DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -11615,6 +11974,18 @@ export namespace Prisma {
     allowedUserIds?: DocumentCreateallowedUserIdsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type AuditLogCreateManyUserInput = {
+    id?: string
+    method: string
+    path: string
+    statusCode: number
+    durationMs: number
+    ipAddress: string
+    userAgent?: string | null
+    body?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -11738,6 +12109,42 @@ export namespace Prisma {
     allowedUserIds?: DocumentUpdateallowedUserIdsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    statusCode?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    statusCode?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    method?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    statusCode?: IntFieldUpdateOperationsInput | number
+    durationMs?: IntFieldUpdateOperationsInput | number
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FolderCreateManyParentInput = {

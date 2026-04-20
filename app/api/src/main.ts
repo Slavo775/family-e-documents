@@ -1,12 +1,14 @@
 import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
+import type { NestExpressApplication } from '@nestjs/platform-express'
 import { ValidationPipe } from '@nestjs/common'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  app.set('trust proxy', 1)
 
   app.use(helmet())
 
@@ -30,8 +32,11 @@ async function bootstrap() {
 
   const port = process.env['PORT'] ?? 3011
   await app.listen(port)
+  // eslint-disable-next-line no-console
   console.log(`API running on http://localhost:${port}`)
+  // eslint-disable-next-line no-console
   console.log(`Swagger UI: http://localhost:${port}/api/docs`)
 }
 
+// eslint-disable-next-line no-console
 bootstrap().catch(console.error)
