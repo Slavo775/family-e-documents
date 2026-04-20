@@ -1,6 +1,4 @@
-# Storage Spec
-
-## Requirements
+## ADDED Requirements
 
 ### Requirement: StorageService interface
 `app/api` SHALL define a `StorageService` TypeScript interface with four methods: `createUploadUrl`, `createDownloadUrl`, `deleteObject`, and `objectExists`. All business logic SHALL depend on this interface, not the concrete implementation.

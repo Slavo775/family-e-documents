@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger, BadRequestException } from '@nestjs/common'
 import type { ConfigService } from '@nestjs/config'
 import {
   S3Client,
@@ -11,8 +11,30 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import type { IStorageService } from './storage.interface'
 
+const MAX_FILE_BYTES = 500 * 1024 * 1024 // 500 MB
+
+const ALLOWED_MIME_TYPES = new Set([
+  // Documents
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'application/vnd.oasis.opendocument.text',
+  'application/vnd.oasis.opendocument.spreadsheet',
+  'application/vnd.oasis.opendocument.presentation',
+  // Images
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  // Text
+  'text/plain',
+  'text/csv',
+])
+
 @Injectable()
 export class S3StorageService implements IStorageService {
+  private readonly logger = new Logger(S3StorageService.name)
   private readonly client: S3Client
   private readonly bucket: string
   private readonly uploadTtl: number
@@ -38,10 +60,21 @@ export class S3StorageService implements IStorageService {
 
   async createUploadUrl(params: {
     documentId: string
+    filename: string
     mimeType: string
     sizeBytes: number
   }): Promise<{ objectKey: string; uploadUrl: string; expiresAt: Date }> {
-    const objectKey = `documents/${params.documentId}`
+    if (!ALLOWED_MIME_TYPES.has(params.mimeType)) {
+      throw new BadRequestException(`MIME type not allowed: ${params.mimeType}`)
+    }
+
+    if (params.sizeBytes > MAX_FILE_BYTES) {
+      throw new BadRequestException(
+        `File size ${params.sizeBytes} exceeds maximum of ${MAX_FILE_BYTES} bytes (500 MB)`,
+      )
+    }
+
+    const objectKey = `documents/${params.documentId}/${params.filename}`
 
     const command = new PutObjectCommand({
       Bucket: this.bucket,
@@ -92,10 +125,7 @@ export class S3StorageService implements IStorageService {
     try {
       await this.client.send(new DeleteObjectCommand({ Bucket: this.bucket, Key: objectKey }))
     } catch (err) {
-      if (err instanceof NoSuchKey || (err as { name?: string }).name === 'NotFound') {
-        return
-      }
-      throw err
+      this.logger.error(`Failed to delete object ${objectKey}`, err instanceof Error ? err.stack : err)
     }
   }
 }

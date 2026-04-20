@@ -101,6 +101,7 @@ export class DocumentsService {
 
     const { objectKey, uploadUrl, expiresAt } = await this.storage.createUploadUrl({
       documentId,
+      filename: dto.name,
       mimeType: dto.mimeType,
       sizeBytes: dto.sizeBytes,
     })
