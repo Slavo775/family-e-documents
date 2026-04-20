@@ -99,3 +99,11 @@ export interface UploadInitResponse {
   uploadUrl: string
   uploadExpiresAt: string
 }
+
+export interface FolderPermissionEntry {
+  userId: string
+  userName: string
+  actions: string[]
+  inherited: boolean
+  inheritedFrom?: string
+}

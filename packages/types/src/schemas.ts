@@ -20,3 +20,9 @@ export const UpdateFolderSchema = z.object({
 })
 
 export type UpdateFolderDto = z.infer<typeof UpdateFolderSchema>
+
+export const UpsertFolderPermissionSchema = z.object({
+  actions: z.array(z.enum(['VIEW', 'UPLOAD', 'DELETE', 'MANAGE'])),
+})
+
+export type UpsertFolderPermissionDto = z.infer<typeof UpsertFolderPermissionSchema>
