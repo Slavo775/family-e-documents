@@ -5,11 +5,15 @@ if (process.env['NODE_ENV'] === 'production') {
   process.exit(1)
 }
 
+import bcrypt from 'bcryptjs'
 import { PrismaClient } from './generated/prisma/index.js'
 import { UserFactory } from './factories/User.js'
 import { DocumentFactory } from './factories/Document.js'
 
 const prisma = new PrismaClient()
+
+const SEED_ADMIN_EMAIL = process.env['SEED_ADMIN_EMAIL'] ?? 'admin@family.local'
+const SEED_ADMIN_PASSWORD = process.env['SEED_ADMIN_PASSWORD'] ?? 'Admin123!'
 
 // ─── Folder tree as defined in PROJECT_SPEC.md ──────────────────────────────
 
@@ -57,12 +61,12 @@ async function seedFolders(createdById: string): Promise<Record<string, string>>
 async function main(): Promise<void> {
   console.log('Seeding database...')
 
-  // Admin user
-  const adminFactory = await UserFactory.createAdmin()
+  // Admin user — credentials driven by SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD env vars
+  const adminPasswordHash = await bcrypt.hash(SEED_ADMIN_PASSWORD, 12)
   const admin = await prisma.user.upsert({
-    where: { email: adminFactory.user.email },
+    where: { email: SEED_ADMIN_EMAIL },
     update: {},
-    create: adminFactory.user,
+    create: { email: SEED_ADMIN_EMAIL, passwordHash: adminPasswordHash, name: 'Admin', role: 'ADMIN' },
   })
   console.log(`Admin: ${admin.email} (${admin.id})`)
 

@@ -11,6 +11,9 @@
     "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "zod": "^4.0.0"
+  },
   "devDependencies": {
     "@family-docs/config-eslint": "workspace:*",
     "@family-docs/config-ts": "workspace:*",

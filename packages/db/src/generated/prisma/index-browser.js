@@ -132,6 +132,14 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.FolderScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -230,6 +238,7 @@ exports.Visibility = exports.$Enums.Visibility = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Session: 'Session',
   Folder: 'Folder',
   FolderPermission: 'FolderPermission',
   Document: 'Document',

@@ -7,6 +7,7 @@ export { Role, DocumentStatus, Visibility, FolderAction } from './generated/pris
 // Model types
 export type {
   User,
+  Session,
   Folder,
   FolderPermission,
   Document,

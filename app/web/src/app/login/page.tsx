@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { LoginSchema, type LoginDto } from '@family-docs/types'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import {
@@ -22,23 +22,16 @@ import {
   Input,
 } from '@family-docs/ui'
 
-const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(1, 'Password is required'),
-})
-
-type LoginFormValues = z.infer<typeof loginSchema>
-
 export default function LoginPage() {
   const router = useRouter()
   const [authError, setAuthError] = useState<string | null>(null)
 
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<LoginDto>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: { email: '', password: '' },
   })
 
-  async function onSubmit(values: LoginFormValues) {
+  async function onSubmit(values: LoginDto) {
     setAuthError(null)
     const result = await signIn('credentials', {
       email: values.email,
