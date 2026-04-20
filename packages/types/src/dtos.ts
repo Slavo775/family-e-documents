@@ -84,6 +84,16 @@ export interface DocumentListResponse {
   limit: number
 }
 
+export interface FolderNode {
+  id: string
+  name: string
+  parentId: string | null
+  childCount: number
+  documentCount: number
+  userPermissions: string[]
+  createdAt: string
+}
+
 export interface UploadInitResponse {
   documentId: string
   uploadUrl: string

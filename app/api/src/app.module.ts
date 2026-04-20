@@ -8,6 +8,7 @@ import { AuditMiddleware } from './audit/audit.middleware'
 import { StorageModule } from './storage/storage.module'
 import { PermissionsModule } from './permissions/permissions.module'
 import { DocumentsModule } from './documents/documents.module'
+import { FoldersModule } from './folders/folders.module'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { DocumentsModule } from './documents/documents.module'
     StorageModule,
     PermissionsModule,
     DocumentsModule,
+    FoldersModule,
   ],
 })
 export class AppModule implements NestModule {

@@ -80,6 +80,7 @@ model Folder {
   permissions FolderPermission[]
   documents   Document[]
 
+  @@unique([parentId, name])
   @@map("folders")
 }
 

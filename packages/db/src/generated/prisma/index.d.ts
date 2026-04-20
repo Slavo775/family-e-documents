@@ -8861,6 +8861,7 @@ export namespace Prisma {
 
   export type FolderWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    parentId_name?: FolderParentIdNameCompoundUniqueInput
     AND?: FolderWhereInput | FolderWhereInput[]
     OR?: FolderWhereInput[]
     NOT?: FolderWhereInput | FolderWhereInput[]
@@ -8874,7 +8875,7 @@ export namespace Prisma {
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     permissions?: FolderPermissionListRelationFilter
     documents?: DocumentListRelationFilter
-  }, "id">
+  }, "id" | "parentId_name">
 
   export type FolderOrderByWithAggregationInput = {
     id?: SortOrder
@@ -9867,6 +9868,11 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type FolderParentIdNameCompoundUniqueInput = {
+    parentId: string
+    name: string
   }
 
   export type FolderCountOrderByAggregateInput = {

@@ -6,3 +6,17 @@ export const LoginSchema = z.object({
 })
 
 export type LoginDto = z.infer<typeof LoginSchema>
+
+export const CreateFolderSchema = z.object({
+  name: z.string().min(1).max(255),
+  parentId: z.string().optional(),
+})
+
+export type CreateFolderDto = z.infer<typeof CreateFolderSchema>
+
+export const UpdateFolderSchema = z.object({
+  name: z.string().min(1).max(255).optional(),
+  parentId: z.string().optional(),
+})
+
+export type UpdateFolderDto = z.infer<typeof UpdateFolderSchema>
