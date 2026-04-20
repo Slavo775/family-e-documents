@@ -9,6 +9,7 @@ import { StorageModule } from './storage/storage.module'
 import { PermissionsModule } from './permissions/permissions.module'
 import { DocumentsModule } from './documents/documents.module'
 import { FoldersModule } from './folders/folders.module'
+import { SearchModule } from './search/search.module'
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { FoldersModule } from './folders/folders.module'
     PermissionsModule,
     DocumentsModule,
     FoldersModule,
+    SearchModule,
   ],
 })
 export class AppModule implements NestModule {

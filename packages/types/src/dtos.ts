@@ -107,3 +107,27 @@ export interface FolderPermissionEntry {
   inherited: boolean
   inheritedFrom?: string
 }
+
+export interface SearchResult {
+  id: string
+  name: string
+  title: string
+  description: string | null
+  tags: string[]
+  folderId: string
+  folderName: string
+  folderPath: string
+  mimeType: string
+  sizeBytes: number
+  rank: number
+  uploadedBy: { id: string; name: string }
+  createdAt: string
+}
+
+export interface SearchResultsResponse {
+  data: SearchResult[]
+  total: number
+  page: number
+  limit: number
+  query: string
+}
