@@ -9,6 +9,6 @@ import { RolesGuard } from '../common/roles.guard'
   imports: [AuthModule],
   providers: [PermissionsService, RolesGuard],
   controllers: [PermissionsController],
-  exports: [PermissionsService],
+  exports: [PermissionsService, RolesGuard],
 })
 export class PermissionsModule {}

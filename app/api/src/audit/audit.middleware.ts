@@ -1,7 +1,7 @@
 import type { NestMiddleware } from '@nestjs/common'
 import { Injectable } from '@nestjs/common'
 import type { Request, Response, NextFunction } from 'express'
-import type { PrismaService } from '../prisma/prisma.service'
+import { PrismaService } from '../prisma/prisma.service'
 
 const REDACTED_FIELDS = ['password', 'passwordHash', 'token', 'secret']
 const MUTATING_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE'])

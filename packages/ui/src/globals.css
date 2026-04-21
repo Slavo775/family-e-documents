@@ -1,4 +1,5 @@
-/* Base styles for packages/ui component library */
+/* Base styles for packages/ui component library.
+   CSS variables (theme tokens) are defined in the consuming app's globals.css. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

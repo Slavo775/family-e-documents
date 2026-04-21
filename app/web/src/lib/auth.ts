@@ -15,6 +15,7 @@ declare module 'next-auth' {
       role: string
       canRestrictDocs: boolean
     }
+    apiToken: string
   }
 }
 
@@ -87,6 +88,7 @@ export const authOptions: NextAuthOptions = {
         role: token.role,
         canRestrictDocs: token.canRestrictDocs,
       }
+      session.apiToken = token.apiToken
       return session
     },
   },

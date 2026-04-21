@@ -6,6 +6,23 @@ export interface UserPublic {
   name: string
   role: Role
   canRestrictDocs: boolean
+  createdAt: string
+}
+
+export interface CreateUserDto {
+  email: string
+  password: string
+  name: string
+  role?: Role
+  canRestrictDocs?: boolean
+}
+
+export interface UpdateUserDto {
+  email?: string
+  name?: string
+  role?: Role
+  canRestrictDocs?: boolean
+  password?: string
 }
 
 export interface AuditLogEntry {

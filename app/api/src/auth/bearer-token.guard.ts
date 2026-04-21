@@ -1,7 +1,7 @@
 import type { CanActivate, ExecutionContext} from '@nestjs/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import type { Request } from 'express'
-import type { SessionService } from './session.service'
+import { SessionService } from './session.service'
 
 @Injectable()
 export class BearerTokenGuard implements CanActivate {

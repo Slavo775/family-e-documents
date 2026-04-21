@@ -28,7 +28,7 @@ import {
 import { Transform, Type } from 'class-transformer'
 import type { Request } from 'express'
 import type { Role } from '@family-docs/db'
-import type { DocumentsService } from './documents.service'
+import { DocumentsService } from './documents.service'
 import { BearerTokenGuard } from '../auth/bearer-token.guard'
 
 type AuthRequest = Request & {

@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 import type { UserPublic } from '@family-docs/types'
-import type { PrismaService } from '../prisma/prisma.service'
-import type { SessionService } from './session.service'
+import { PrismaService } from '../prisma/prisma.service'
+import { SessionService } from './session.service'
 
 // Used for constant-time compare when the user is not found, preventing timing attacks
 const DUMMY_HASH = '$2b$12$AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
@@ -34,6 +34,7 @@ export class AuthService {
         name: user.name,
         role: user.role as UserPublic['role'],
         canRestrictDocs: user.canRestrictDocs,
+        createdAt: user.createdAt.toISOString(),
       },
       token,
     }

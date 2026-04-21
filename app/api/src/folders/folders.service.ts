@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common'
 import type { FolderNode } from '@family-docs/types'
 import { FolderAction, Prisma, Role } from '@family-docs/db'
-import type { PrismaService } from '../prisma/prisma.service'
-import type { PermissionsService } from '../permissions/permissions.service'
+import { PrismaService } from '../prisma/prisma.service'
+import { PermissionsService } from '../permissions/permissions.service'
 
 type FolderRow = {
   id: string

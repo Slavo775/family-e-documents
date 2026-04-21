@@ -10,8 +10,8 @@ import {
 import { randomUUID } from 'node:crypto'
 import type { DocumentPublic, CreateDocumentDto, UpdateDocumentDto } from '@family-docs/types'
 import { FolderAction, Role } from '@family-docs/db'
-import type { PrismaService } from '../prisma/prisma.service'
-import type { PermissionsService } from '../permissions/permissions.service'
+import { PrismaService } from '../prisma/prisma.service'
+import { PermissionsService } from '../permissions/permissions.service'
 import { STORAGE_SERVICE, type IStorageService } from '../storage/storage.interface'
 
 const MAX_TAG_LENGTH = 50

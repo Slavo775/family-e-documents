@@ -13,6 +13,8 @@
     "@family-docs/types": "workspace:*",
     "@family-docs/ui": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
+    "@tanstack/react-query": "^5.56.0",
+    "lucide-react": "^0.400.0",
     "next": "^14.2.0",
     "next-auth": "^4.24.0",
     "react": "^18.3.0",
@@ -22,12 +24,12 @@
   },
   "devDependencies": {
     "@family-docs/config-eslint": "workspace:*",
-    "eslint-config-next": "14.2.0",
     "@family-docs/config-ts": "workspace:*",
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.0",
+    "eslint-config-next": "14.2.0",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.4.0"

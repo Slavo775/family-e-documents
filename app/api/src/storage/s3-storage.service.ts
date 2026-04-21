@@ -1,5 +1,5 @@
 import { Injectable, Logger, BadRequestException } from '@nestjs/common'
-import type { ConfigService } from '@nestjs/config'
+import { ConfigService } from '@nestjs/config'
 import {
   S3Client,
   PutObjectCommand,
@@ -9,7 +9,7 @@ import {
   NoSuchKey,
 } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import type { IStorageService } from './storage.interface'
+import { IStorageService } from './storage.interface'
 
 const MAX_FILE_BYTES = 500 * 1024 * 1024 // 500 MB
 

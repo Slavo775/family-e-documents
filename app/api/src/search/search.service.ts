@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Prisma, Role, FolderAction } from '@family-docs/db'
 import { z } from 'zod'
 import type { SearchResult, SearchResultsResponse } from '@family-docs/types'
-import type { PrismaService } from '../prisma/prisma.service'
+import { PrismaService } from '../prisma/prisma.service'
 
 interface SearchQuery {
   q: string

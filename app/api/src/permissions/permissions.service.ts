@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import type { PrismaService } from '../prisma/prisma.service'
+import { PrismaService } from '../prisma/prisma.service'
 import { FolderAction, Role } from '@family-docs/db'
 import type { FolderPermissionEntry } from '@family-docs/types'
 
